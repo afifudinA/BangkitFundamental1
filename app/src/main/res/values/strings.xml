@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">FundamentalTest1</string>
+    <string name="searchbar_hint">Cari User</string>
+    <string name="username">username</string>
+</resources>
