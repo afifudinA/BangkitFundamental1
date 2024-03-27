@@ -14,12 +14,12 @@ import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class DetailViewModel:ViewModel() {
-        val resultDetailUser = MutableLiveData<Result>()
-        val resultFollowersUser = MutableLiveData<Result>()
-        val resultFollowingUser = MutableLiveData<Result>()
+class DetailViewModel : ViewModel() {
+    val resultDetailUser = MutableLiveData<Result>()
+    val resultFollowersUser = MutableLiveData<Result>()
+    val resultFollowingUser = MutableLiveData<Result>()
 
-    fun getDetailUser(username:String){
+    fun getDetailUser(username: String) {
         viewModelScope.launch(Dispatchers.IO) {
             flow {
                 // Make the API call on the IO thread
@@ -49,7 +49,7 @@ class DetailViewModel:ViewModel() {
         }
     }
 
-    fun getFollowers(username:String){
+    fun getFollowers(username: String) {
         viewModelScope.launch(Dispatchers.IO) {
             flow {
                 // Make the API call on the IO thread
@@ -79,7 +79,7 @@ class DetailViewModel:ViewModel() {
         }
     }
 
-    fun getFollowings(username:String){
+    fun getFollowings(username: String) {
         viewModelScope.launch(Dispatchers.IO) {
             flow {
                 // Make the API call on the IO thread

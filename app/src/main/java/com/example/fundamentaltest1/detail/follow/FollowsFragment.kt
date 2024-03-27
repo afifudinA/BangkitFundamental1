@@ -1,16 +1,14 @@
 package com.example.fundamentaltest1.detail.follow
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.view.isVisible
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.observe
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.fundamentaltest1.R
 import com.example.fundamentaltest1.UserAdapter
 import com.example.fundamentaltest1.data.model.items
 import com.example.fundamentaltest1.databinding.FragmentFollowsBinding
@@ -30,8 +28,7 @@ class FollowsFragment : Fragment() {
     private val viewModel by activityViewModels<DetailViewModel>()
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
         binding = FragmentFollowsBinding.inflate(layoutInflater)
         // Inflate the layout for this fragment
@@ -46,14 +43,15 @@ class FollowsFragment : Fragment() {
             adapter = this@FollowsFragment.adapter
         }
 
-        when(type){
+        when (type) {
             FOLLOWERS -> {
-                viewModel.resultFollowersUser.observe(viewLifecycleOwner,this::manageResultFollows)
+                viewModel.resultFollowersUser.observe(viewLifecycleOwner, this::manageResultFollows)
 
             }
+
             FOLLOWING -> {
-                viewModel.resultFollowingUser.observe(viewLifecycleOwner,this::manageResultFollows)
-                
+                viewModel.resultFollowingUser.observe(viewLifecycleOwner, this::manageResultFollows)
+
             }
         }
 
@@ -81,8 +79,8 @@ class FollowsFragment : Fragment() {
     companion object {
         const val FOLLOWING = 100
         const val FOLLOWERS = 101
+
         @JvmStatic
-        fun newInstance(type: Int) =
-            FollowsFragment().apply { this.type = type }
+        fun newInstance(type: Int) = FollowsFragment().apply { this.type = type }
     }
 }

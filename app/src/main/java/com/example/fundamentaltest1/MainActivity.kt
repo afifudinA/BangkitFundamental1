@@ -2,34 +2,16 @@ package com.example.fundamentaltest1
 
 import android.content.Intent
 import android.os.Bundle
-import android.provider.Settings.Global
-import android.util.Log
 import android.widget.Toast
-import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.isVisible
-import androidx.lifecycle.ViewModel
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.fundamentaltest1.data.model.ResponseUser
 import com.example.fundamentaltest1.data.model.items
-import com.example.fundamentaltest1.data.remote.ApiClient
 import com.example.fundamentaltest1.databinding.ActivityMainBinding
-import com.example.fundamentaltest1.databinding.ItemViewBinding
 import com.example.fundamentaltest1.detail.DetailActivity
 import com.example.fundamentaltest1.utils.Result
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.flow.catch
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.onCompletion
-import kotlinx.coroutines.flow.onStart
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
 class MainActivity : AppCompatActivity() {
 
@@ -52,7 +34,7 @@ class MainActivity : AppCompatActivity() {
         binding.recyclerView.layoutManager = LinearLayoutManager(this)
         binding.recyclerView.adapter = adapter
 
-        binding.searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener{
+        binding.searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 viewModel.getUser(query.toString())
                 return true

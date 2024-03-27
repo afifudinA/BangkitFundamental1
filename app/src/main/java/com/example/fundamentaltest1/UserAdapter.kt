@@ -1,16 +1,15 @@
 package com.example.fundamentaltest1
 
-import android.content.ClipData.Item
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
-import coil.transform.CircleCropTransformation
-import com.example.fundamentaltest1.data.model.ResponseUser
 import com.example.fundamentaltest1.data.model.items
 import com.example.fundamentaltest1.databinding.ItemViewBinding
 
-class UserAdapter(private var items: MutableList<items> = mutableListOf(), private val listener:(items)->Unit) : RecyclerView.Adapter<UserAdapter.UserViewHolder>()  {
+class UserAdapter(
+    private var items: MutableList<items> = mutableListOf(), private val listener: (items) -> Unit
+) : RecyclerView.Adapter<UserAdapter.UserViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): UserViewHolder {
         val binding = ItemViewBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -20,7 +19,7 @@ class UserAdapter(private var items: MutableList<items> = mutableListOf(), priva
     override fun onBindViewHolder(holder: UserViewHolder, position: Int) {
         val item = items[position]
         holder.bind(item)
-        holder.itemView.setOnClickListener{
+        holder.itemView.setOnClickListener {
             listener(item)
         }
     }
@@ -29,7 +28,8 @@ class UserAdapter(private var items: MutableList<items> = mutableListOf(), priva
         return items.size
     }
 
-    inner class UserViewHolder(private val binding: ItemViewBinding) : RecyclerView.ViewHolder(binding.root) {
+    inner class UserViewHolder(private val binding: ItemViewBinding) :
+        RecyclerView.ViewHolder(binding.root) {
         fun bind(item: items) {
             // Bind data to views here
             binding.image.load(item.avatarUrl)
