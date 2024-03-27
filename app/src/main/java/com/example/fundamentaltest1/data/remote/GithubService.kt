@@ -10,6 +10,7 @@ import retrofit2.http.Path
 import retrofit2.http.QueryMap
 
 interface GithubService {
+    @JvmSuppressWildcards
     @GET("users")
     suspend fun getUserGithub(): MutableList<items>
 
@@ -22,6 +23,7 @@ interface GithubService {
     @GET("users/{username}/following")
     suspend fun getFollowingsGithub(@Path("username") username: String): MutableList<items>
 
+    @JvmSuppressWildcards
     @GET("search/users")
-    suspend fun searchUserGithub(@QueryMap params:HashMap<String, Any>): MutableList<items>
+    suspend fun searchUserGithub(@QueryMap params: Map<String, Any>): ResponseUser
 }

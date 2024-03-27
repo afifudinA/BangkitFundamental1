@@ -8,6 +8,7 @@ import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.SearchView
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.isVisible
@@ -34,7 +35,7 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
     private val adapter by lazy {
-        UserAdapter {user->
+        UserAdapter { user ->
             Intent(this, DetailActivity::class.java).apply {
                 putExtra("username", user.login)
                 startActivity(this)
@@ -50,9 +51,18 @@ class MainActivity : AppCompatActivity() {
 
         binding.recyclerView.layoutManager = LinearLayoutManager(this)
         binding.recyclerView.adapter = adapter
-        with(binding) {
-            searchView.setupWithSearchBar(searchBar)
-        }
+
+        binding.searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener{
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                viewModel.getUser(query.toString())
+                return true
+            }
+
+            override fun onQueryTextChange(newText: String): Boolean {
+                return false
+            }
+        })
+
 
         viewModel.resultUser.observe(this) {
             when (it) {

@@ -53,4 +53,37 @@ class MainViewModel: ViewModel() {
             }
         }
     }
+
+    fun getUser(username: String){
+        viewModelScope.launch(Dispatchers.IO) {
+            flow {
+                // Make the API call on the IO thread
+                val response = withContext(Dispatchers.IO) {
+                    ApiClient.githubService.searchUserGithub(mapOf(
+                        "q" to username,
+                        "per_page" to 15
+                    ))
+                }
+                emit(response)
+            }.onStart {
+                // This block runs when the flow starts
+                withContext(Dispatchers.Main) {
+                    resultUser.value = Result.Loading(true)
+                }
+            }.onCompletion {
+                // This block runs when the flow completes (successfully or with an exception)
+                withContext(Dispatchers.Main) {
+                    resultUser.value = Result.Loading(false)
+                }
+            }.catch { e ->
+                // This block runs if there's an exception during the flow
+                Log.e("Error", e.message.toString())
+                resultUser.value = Result.Error(e)
+            }.collect { response ->
+                withContext(Dispatchers.Main) {
+                    resultUser.value = Result.Success(response.items)
+                }
+            }
+        }
+    }
 }
