@@ -14,5 +14,14 @@ interface GithubService {
     suspend fun getUserGithub(): MutableList<items>
 
     @GET("users/{username}")
-    suspend fun getDetailUserGithub(@Path("username") username:String): ResponseDetailUser
+    suspend fun getDetailUserGithub(@Path("username") username: String): ResponseDetailUser
+
+    @GET("users/{username}/followers")
+    suspend fun getFollowersGithub(@Path("username") username: String): MutableList<items>
+
+    @GET("users/{username}/following")
+    suspend fun getFollowingsGithub(@Path("username") username: String): MutableList<items>
+
+    @GET("search/users")
+    suspend fun searchUserGithub(@QueryMap params:HashMap<String, Any>): MutableList<items>
 }

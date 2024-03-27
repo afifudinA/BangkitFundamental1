@@ -15,7 +15,9 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 class DetailViewModel:ViewModel() {
-    val resultDetailUser = MutableLiveData<Result>()
+        val resultDetailUser = MutableLiveData<Result>()
+        val resultFollowersUser = MutableLiveData<Result>()
+        val resultFollowingUser = MutableLiveData<Result>()
 
     fun getDetailUser(username:String){
         viewModelScope.launch(Dispatchers.IO) {
@@ -42,6 +44,66 @@ class DetailViewModel:ViewModel() {
             }.collect { response ->
                 withContext(Dispatchers.Main) {
                     resultDetailUser.value = Result.Success(response)
+                }
+            }
+        }
+    }
+
+    fun getFollowers(username:String){
+        viewModelScope.launch(Dispatchers.IO) {
+            flow {
+                // Make the API call on the IO thread
+                val response = withContext(Dispatchers.IO) {
+                    ApiClient.githubService.getFollowersGithub(username)
+                }
+                emit(response)
+            }.onStart {
+                // This block runs when the flow starts
+                withContext(Dispatchers.Main) {
+                    resultFollowersUser.value = Result.Loading(true)
+                }
+            }.onCompletion {
+                // This block runs when the flow completes (successfully or with an exception)
+                withContext(Dispatchers.Main) {
+                    resultFollowersUser.value = Result.Loading(false)
+                }
+            }.catch { e ->
+                // This block runs if there's an exception during the flow
+                Log.e("Error", e.message.toString())
+                resultFollowersUser.value = Result.Error(e)
+            }.collect { response ->
+                withContext(Dispatchers.Main) {
+                    resultFollowersUser.value = Result.Success(response)
+                }
+            }
+        }
+    }
+
+    fun getFollowings(username:String){
+        viewModelScope.launch(Dispatchers.IO) {
+            flow {
+                // Make the API call on the IO thread
+                val response = withContext(Dispatchers.IO) {
+                    ApiClient.githubService.getFollowingsGithub(username)
+                }
+                emit(response)
+            }.onStart {
+                // This block runs when the flow starts
+                withContext(Dispatchers.Main) {
+                    resultFollowingUser.value = Result.Loading(true)
+                }
+            }.onCompletion {
+                // This block runs when the flow completes (successfully or with an exception)
+                withContext(Dispatchers.Main) {
+                    resultFollowingUser.value = Result.Loading(false)
+                }
+            }.catch { e ->
+                // This block runs if there's an exception during the flow
+                Log.e("Error", e.message.toString())
+                resultFollowingUser.value = Result.Error(e)
+            }.collect { response ->
+                withContext(Dispatchers.Main) {
+                    resultFollowingUser.value = Result.Success(response)
                 }
             }
         }
