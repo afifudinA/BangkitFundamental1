@@ -42,6 +42,8 @@ class DetailActivity : AppCompatActivity() {
                     }
                     binding.toolbar.title = "Detail ${user.login}"
                     binding.nama.text = user.name
+                    binding.tab.getTabAt(0)?.orCreateBadge?.number = user.followers
+                    binding.tab.getTabAt(1)?.orCreateBadge?.number = user.following
                 }
 
                 is Result.Error -> {
@@ -71,6 +73,7 @@ class DetailActivity : AppCompatActivity() {
         TabLayoutMediator(binding.tab, binding.viewpager) { tab, posisi ->
             tab.text = titleFragment[posisi]
         }.attach()
+
 
         binding.tab.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
             override fun onTabSelected(tab: Tab?) {
