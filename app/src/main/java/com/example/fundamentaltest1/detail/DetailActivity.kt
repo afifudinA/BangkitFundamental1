@@ -1,5 +1,6 @@
 package com.example.fundamentaltest1.detail
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.MenuItem
 import android.widget.Toast
@@ -24,6 +25,7 @@ class DetailActivity : AppCompatActivity() {
     private val viewModel by viewModels<DetailViewModel>()
 
 
+    @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityDetailBinding.inflate(layoutInflater)
@@ -42,8 +44,8 @@ class DetailActivity : AppCompatActivity() {
                     }
                     binding.toolbar.title = "Detail ${user.login}"
                     binding.nama.text = user.name
-                    binding.tab.getTabAt(0)?.orCreateBadge?.number = user.followers
-                    binding.tab.getTabAt(1)?.orCreateBadge?.number = user.following
+                    binding.followerCount.text = "Followers ${user.followers}"
+                    binding.followingCount.text = "Following ${user.following}"
                 }
 
                 is Result.Error -> {
