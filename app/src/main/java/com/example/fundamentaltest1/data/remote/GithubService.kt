@@ -13,13 +13,13 @@ interface GithubService {
     suspend fun getUserGithub(): MutableList<items>
 
     @GET("users/{username}")
-    suspend fun getDetailUserGithub(@Path("username") username: String): ResponseDetailUser
+    suspend fun getDetailUserGithub(@Path("username") username: String?): ResponseDetailUser
 
     @GET("users/{username}/followers")
-    suspend fun getFollowersGithub(@Path("username") username: String): MutableList<items>
+    suspend fun getFollowersGithub(@Path("username") username: String?): MutableList<items>
 
     @GET("users/{username}/following")
-    suspend fun getFollowingsGithub(@Path("username") username: String): MutableList<items>
+    suspend fun getFollowingsGithub(@Path("username") username: String?): MutableList<items>
 
     @JvmSuppressWildcards
     @GET("search/users")

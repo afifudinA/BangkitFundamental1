@@ -19,7 +19,7 @@ class MainActivity : AppCompatActivity() {
     private val adapter by lazy {
         UserAdapter { user ->
             Intent(this, DetailActivity::class.java).apply {
-                putExtra("username", user.login)
+                putExtra("items", user)
                 startActivity(this)
             }
         }
