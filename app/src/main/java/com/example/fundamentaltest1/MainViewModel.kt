@@ -3,9 +3,13 @@ package com.example.fundamentaltest1
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import com.example.fundamentaltest1.data.remote.ApiClient
+import com.example.fundamentaltest1.settings.SettingsViewModel
 import com.example.fundamentaltest1.utils.Result
+import com.mbahgojol.exprojectgithub.data.local.SettingPreferences
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow
@@ -14,9 +18,11 @@ import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class MainViewModel : ViewModel() {
+class MainViewModel(private val preferences: SettingPreferences) : ViewModel() {
 
     val resultUser = MutableLiveData<Result>()
+
+    fun getTheme() = preferences.getThemeSetting().asLiveData()
 
 
     fun getUser() {
@@ -81,5 +87,8 @@ class MainViewModel : ViewModel() {
                 }
             }
         }
+    }
+    class Factory(private val preferences: SettingPreferences) : ViewModelProvider.NewInstanceFactory() {
+        override fun <T : ViewModel> create(modelClass: Class<T>): T = MainViewModel(preferences) as T
     }
 }
